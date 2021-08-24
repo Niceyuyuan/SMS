@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th=http://www.thymeleaf.org>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>员工管理系统</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="asserts/css/dashboard.css" rel="stylesheet">
+
+</head>
+
+<body>
+<!--顶部导航栏-->
+<div th:replace="~{commons/commons::topbar}" }></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <!--侧边栏-->
+        <div th:replace="~{commons/commons::siderbar(active='account.html')}"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+            <!--            <div-->
+            <!--                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">-->
+            <div class="card mt-3" style="width:300px">
+                <img class="card-img-top" src="https://static.runoob.com/images/mix/img_avatar.png" alt="Card image"
+                     style="width:100%">
+                <div class="card-body">
+                    <h4 class="card-title">我的资料</h4>
+                    我的ID：<span class="card-text" th:text="${admin.getAdmin_id()}"></span>
+                    <br>
+                    我的用户名：<span class="card-text" th:text="${admin.getUsername()}"></span>
+                    <br>
+                    我的姓名：<span class="card-text" th:text="${admin.getAdmin_name()}"></span>
+                    <div class="mt-2">
+                        <a th:href="@{/goUpdateUser}" class="btn btn-primary">修改用户名和密码</a>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js"></script>
+<script type="text/javascript" src="asserts/js/popper.min.js"></script>
+<script type="text/javascript" src="asserts/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>

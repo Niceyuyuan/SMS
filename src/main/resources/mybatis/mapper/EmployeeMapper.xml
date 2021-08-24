@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyy.mapper.EmployeeMapper">
+    <cache/>
+    <select id="queryAllEmp" resultType="Employee">
+        select e.*, department_name
+        from employee e
+                 join
+             department d on e.ed_id = d.department_id
+        order by e.createdDate desc;
+    </select>
+
+    <select id="queryByName" resultType="Employee" parameterType="String">
+        select e.*, department_name
+        from employee e
+                 join
+             department d on e.ed_id = d.department_id
+        where employee_name like CONCAT(CONCAT('%', #{name}), '%')
+        order by e.employee_id asc;
+    </select>
+
+    <select id="queryByDepart" resultType="Employee" parameterType="String">
+        select e.*, department_name
+        from employee e
+                 join
+             department d on e.ed_id = d.department_id
+        where d.department_name = #{edName}
+        order by e.employee_id asc;
+    </select>
+    <!---->
+    <select id="queryById" parameterType="Integer" resultType="Employee">
+        select e.*, department_name
+        from employee e
+                 join
+             department d on e.ed_id = d.department_id
+        where e.employee_id = #{id};
+    </select>
+
+    <insert id="addEmp" parameterType="Employee">
+        insert into employee(employee_name, employee_job, ed_id, gender, birthday, phone, address, createdBy,
+                             createdDate)
+            value (#{employee_name}, #{employee_job}, #{ed_id}, #{gender}, #{birthday}, #{phone}, #{address},
+                   #{createdBy}, #{createdDate})
+    </insert>
+
+    <delete id="deleteEmp" parameterType="Integer">
+        delete
+        from employee
+        where employee_id = #{employee_id};
+    </delete>
+
+    <update id="updateEmp" parameterType="Employee">
+        update employee
+        set employee_name = #{employee_name},
+            employee_job=#{employee_job},
+            ed_id=#{ed_id},
+            gender=#{gender},
+            birthday=#{birthday},
+            phone=#{phone},
+            address=#{address},
+            modifyBy=#{modifyBy},
+            modifyDate=#{modifyDate}
+        where employee_id = #{employee_id};
+    </update>
+</mapper>

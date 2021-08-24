@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyy.mapper.LogMapper">
+    <cache/>
+
+    <select id="queryAllLog" resultType="Log">
+        select *
+        from myLog;
+    </select>
+
+    <insert id="addLog" parameterType="Log">
+        insert into myLog(operator, description,time)
+        VALUES (#{operator}, #{description},#{time})
+    </insert>
+</mapper>

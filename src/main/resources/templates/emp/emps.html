@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th=http://www.thymeleaf.org>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>员工管理系统</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="asserts/css/dashboard.css" rel="stylesheet">
+    <script>
+        // <!--让用户选择取消与否，取消添加则不跳转页面-->
+        function Myconfirm() {
+            var r = confirm("确认删除吗？");
+            if(r==false){
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <!--顶部导航栏-->
+    <div th:replace="~{commons/commons::topbar}" }></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!--侧边栏-->
+            <div th:replace="~{commons/commons::siderbar(active='emps.html')}"></div>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                <div class="mt-2 form-inline">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            按部门展示
+                        </button>
+<!--                        th:href="@{/queryByDname/{edName}(edName=${depart.getDepartment_name()})}" 点击即get到当前选中操作的部门名称,参数edName传给后端-->
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" th:each="depart:${departs}" name="edName"
+                                th:text="${depart.getDepartment_name()}" th:value="${depart.getDepartment_name()}" th:href="@{/queryByDname(edName=${depart.getDepartment_name()})}"></a>
+                        </div>
+                    </div>
+
+                    <div class="input-group ml-2">
+                        <form th:action="@{/queryByName}"  method="POST">
+                        <input type="text" name="name"  class="form-control" placeholder="输入员工姓名">
+                        <div class="input-group-append" style="float: right">
+                            <button type="submit" class="btn btn-info btn-search">查找</button>
+                        </div>
+                    </form>
+                    </div>
+
+                    <a class="btn  btn-success ml-3" th:href="@{/gotoAddEmps}">添加员工</a>
+                </div>
+
+                <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <div class="table-responsive mt-3">
+                        <table class="table table-hover table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>员工ID</th>
+                                    <th>员工姓名</th>
+                                    <th>所属岗位</th>
+                                    <th>所属部门</th>
+                                    <th>性别</th>
+                                    <th>生日</th>
+                                    <th>手机号</th>
+                                    <th>地址</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="emp:${emps}">
+                                    <td th:text="${emp.getEmployee_id()}"></td>
+                                    <td th:text="${emp.getEmployee_name()}"></td>
+                                    <td th:text="${emp.getEmployee_job()}"></td>
+                                    <td th:text="${emp.department_name}"></td>
+                                    <td th:text="${emp.getGender()==0?'女':'男'}"></td>
+                                    <td th:text="${#dates.format(emp.getBirthday(),'yyyy-MM-dd')}"></td>
+                                    <td th:text="${emp.getPhone()}"></td>
+                                    <td th:text="${emp.getAddress()}"></td>
+                                    <td>
+                                        <a class="btn btn-sm btn-primary" th:href="@{/goUpdateEmps(id=${emp.getEmployee_id()})}">修改</a>
+                                        <a class="btn btn-sm btn-danger" th:onclick="return Myconfirm()" th:href="@{/deleteEmps(id=${emp.getEmployee_id()})}">删除</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
+                        <c:import url="rollpage.jsp">
+                            <c:param name="totalCount" value="${totalCount}"/>
+                            <c:param name="currentPageNo" value="${currentPageNo}"/>
+                            <c:param name="totalPageCount" value="${totalPageCount}"/>
+                        </c:import>
+
+                    </div>
+
+
+
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+
+
+    <!-- Bootstrap core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js"></script>
+    <script type="text/javascript" src="asserts/js/popper.min.js"></script>
+    <script type="text/javascript" src="asserts/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>

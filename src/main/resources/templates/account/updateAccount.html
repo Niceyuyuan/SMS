@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th=http://www.thymeleaf.org>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>员工管理系统</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="asserts/css/dashboard.css" rel="stylesheet">
+    <script>
+        <!--验证密码-->
+        function Myconfirm2() {
+            var pwd1 = document.getElementById("pwd1");
+            var pwd2 = document.getElementById("pwd2");
+            if (pwd1.value.length < 6 || pwd2.value.length < 6) {
+                alert("您输入的密码长度不正确，请重新输入！");
+                return false;
+            } else if (!(pwd1.value == pwd2.value)) {
+                alert("两次输入的密码不一致，请重新输入！");
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body>
+<!--顶部导航栏-->
+<div th:replace="~{commons/commons::topbar}" }></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <!--侧边栏-->
+        <div th:replace="~{commons/commons::siderbar(active='account.html')}"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <div class="card mt-3" style="width:300px">
+                    <img class="card-img-top" src="https://static.runoob.com/images/mix/img_avatar.png" alt="Card image"
+                         style="width:100%">
+                    <div class="card-body">
+                        <form th:action="@{/updateUser}" method="post">
+                            <input type="hidden" name="admin_id" th:value="${admin.getAdmin_id()}">
+                            <div class="form-group">
+                                <label>用户名</label>
+                                <input th:value="${admin.getUsername()}" type="text" name="username"
+                                       class="form-control"
+                                       placeholder="用户名" required>
+                            </div>
+                            <div class="form-group">
+                                <label>请输入新的密码</label>
+                                <input type="password" name="password" id="pwd1" class="form-control"
+                                       placeholder="密码长度需大于6位"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label>请再次输入新的密码</label>
+                                <input type="password" name="password2" id="pwd2" class="form-control"
+                                       placeholder="密码长度需大于6位"
+                                       required>
+                            </div>
+                        <button type="submit" class="btn btn-primary">确认修改</button>
+                        <a th:href="@{/account}" class="btn btn-secondary">取消</a>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js"></script>
+<script type="text/javascript" src="asserts/js/popper.min.js"></script>
+<script type="text/javascript" src="asserts/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>

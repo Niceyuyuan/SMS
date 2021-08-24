@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th=http://www.thymeleaf.org>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>员工管理系统</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="asserts/css/dashboard.css" rel="stylesheet">
+    <script>
+        // <!--让用户选择取消与否，取消添加则不跳转页面-->
+        function Myconfirm() {
+            var r = confirm("确认修改吗？");
+            if(r==false){
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <!--顶部导航栏-->
+    <div th:replace="~{commons/commons::topbar}" }></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!--侧边栏-->
+            <div th:replace="~{commons/commons::siderbar(active='depart.html')}"></div>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <form th:action="@{/updateDepart}" method="POST">
+                        <div class="form-group" hidden>
+                            <label>部门ID</label>
+                            <input th:value="${depart.getDepartment_id()}" type="text" name="department_id" class="form-control"  required>
+                        </div>
+                        <div class="form-group">
+                            <label>部门名称</label>
+                            <input th:value="${depart.getDepartment_name()}" type="text" name="department_name" class="form-control" placeholder="部门名称" required>
+                        </div>
+                        <div class="form-group">
+                            <label>部门主管</label>
+                            <input th:value="${depart.getPrincipalUser()}" type="text" name="PrincipalUser" class="form-control" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" onclick="return Myconfirm()">确认修改</button>
+                        <a  class="btn  btn-secondary" th:href="@{/departs}">取消</a>
+                    </form>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js"></script>
+    <script type="text/javascript" src="asserts/js/popper.min.js"></script>
+    <script type="text/javascript" src="asserts/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>
