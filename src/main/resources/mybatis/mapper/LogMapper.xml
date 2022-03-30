@@ -7,11 +7,11 @@
 
     <select id="queryAllLog" resultType="Log">
         select *
-        from myLog;
+        from log;
     </select>
 
     <insert id="addLog" parameterType="Log">
-        insert into myLog(operator, description,time)
+        insert into log(operator, description,time)
         VALUES (#{operator}, #{description},#{time})
     </insert>
 </mapper>
